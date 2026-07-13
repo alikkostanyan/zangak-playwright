@@ -1,24 +1,23 @@
 import { test, expect } from "@playwright/test";
+import { HomePage } from "../pages/HomePage";
 
-test("User can open Books section", async ({ page }) => {
-  await page.goto("https://zangakbookstore.am/");
+test("main navigation links are visible", async ({ page }) => {
+  const homePage = new HomePage(page);
 
-  const booksLink = page.getByRole("link",{
-    name: "Գրքեր",
-    exact: true
-  }).first();
+  await homePage.open();
 
-  const giftsLink = page.getByRole("link", {name:"Նվերներ", exact:true}).first();
-  const stationeryLink = page.getByRole("link", {name:"Գրենական պիտույքներ", exact:true}).first();
-
-  await expect(booksLink).toBeVisible();
-  await expect(giftsLink).toBeVisible();
-  await expect(stationeryLink).toBeVisible();
-  await booksLink.click();
-
-  await expect(page).not.toHaveURL("https://zangakbookstore.am/");
-  
+  await expect(homePage.booksLink).toBeVisible();
+  await expect(homePage.giftsLink).toBeVisible();
+  await expect(homePage.stationeryLink).toBeVisible();
 });
 
+test("user can open Books section", async ({ page }) => {
+  const homePage = new HomePage(page);
 
+  await homePage.open();
+  await expect(homePage.booksLink).toBeVisible();
 
+  await homePage.openBooksSection();
+
+  await expect(page).not.toHaveURL("https://zangakbookstore.am/");
+});
