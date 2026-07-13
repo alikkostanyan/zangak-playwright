@@ -15,12 +15,9 @@ test("user can open Books section", async ({ page }) => {
   const homePage = new HomePage(page);
 
   await homePage.open();
+  await expect(homePage.booksLink).toBeVisible();
+
   await homePage.openBooksSection();
 
   await expect(page).not.toHaveURL("https://zangakbookstore.am/");
-
 });
-
-
-
-

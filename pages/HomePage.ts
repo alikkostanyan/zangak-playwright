@@ -32,5 +32,6 @@ export class HomePage {
   async openBooksSection(): Promise<void> {
     await this.booksLink.click();
   }
+  
 }
 
